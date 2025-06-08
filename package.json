@@ -1,6 +1,6 @@
 {
     "name": "github-activity-web",
-    "version": "1.0.19",
+    "version": "1.0.20",
     "description": "A web application to view GitHub user activity",
     "main": "server/index.js",
     "scripts": {
