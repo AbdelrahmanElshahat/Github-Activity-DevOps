@@ -43,7 +43,7 @@ pipeline{
                     echo "Building API Docker image with version: ${version}"
                     // Build the API Docker image
                     dir('server') {
-                        buildImage 'elshahat20/myapp:github-activity-api:${version}'
+                        buildImage "elshahat20/myapp:github-activity-api:${version}"
                         // Also tag as latest for convenience
                         sh "docker tag elshahat20/myapp:github-activity-api:${version} elshahat20/myapp:github-activity-api:latest"
                     }
@@ -58,7 +58,7 @@ pipeline{
                     echo "Building Frontend Docker image with version: ${version}"
                     // Build the Frontend Docker image
                     dir('client') {
-                        buildImage 'elshahat20/myapp:github-activity-client:${version}'
+                        buildImage "elshahat20/myapp:github-activity-client:${version}"
                         // Also tag as latest for convenience
                         sh "docker tag elshahat20/myapp:github-activity-client:${version} elshahat20/myapp:github-activity-client:latest"
                     }
@@ -80,11 +80,11 @@ pipeline{
                     echo "Pushing images to Docker Hub with version: ${version}"
                     
                     // Push API image
-                    dockerPush 'elshahat20/myapp:github-activity-api:${version}'
+                    dockerPush "elshahat20/myapp:github-activity-api:${version}"
                     
 
                     // Push Frontend image
-                    dockerPush 'elshahat20/myapp:github-activity-client:${version}'
+                    dockerPush "elshahat20/myapp:github-activity-client:${version}"
                     
                 }
             }
