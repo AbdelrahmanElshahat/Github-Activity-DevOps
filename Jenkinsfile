@@ -44,7 +44,7 @@ pipeline{
                     
         
                     dir('server') {
-                        buildImage "elshahat20/myapp:github-activity-api${version}"
+                        buildImage "elshahat20/my-app:github-activity-api${version}"
                     }
                 }
             }
@@ -54,7 +54,7 @@ pipeline{
                 script{
                     def version = getVersionFromPackageJson()
                     dir('client') {
-                       buildImage "elshahat20/myapp:github-activity-client${version}"
+                       buildImage "elshahat20/my-app:github-activity-client${version}"
                     }
                 }
             }
@@ -72,8 +72,8 @@ pipeline{
                 script{
                     def version = getVersionFromPackageJson()
                     echo "Raw version from function: '${version}'"
-                    dockerPush "elshahat20/myapp:github-activity-api${version}"
-                    dockerPush "elshahat20/myapp:github-activity-client${version}"
+                    dockerPush "elshahat20/my-app:github-activity-api${version}"
+                    dockerPush "elshahat20/my-app:github-activity-client${version}"
                 }
             }
         }
