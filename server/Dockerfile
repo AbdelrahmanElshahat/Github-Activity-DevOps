@@ -5,10 +5,10 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install only production dependencies
+RUN npm ci --only=production
 
-# Copy server files
+# Copy pre-built server files (assumes Jenkins already built them)
 COPY . .
 
 # Expose API port
