@@ -43,9 +43,11 @@ pipeline{
                     echo "Building API Docker image with version: ${version}"
                     // Build the API Docker image
                     dir('server') {
-                        buildImage "elshahat20/myapp:github-activity-api:${version}"
+                        def imageName = "elshahat20/myapp:github-activity-api:${version}"
+                        echo "Building image: ${imageName}"
+                        sh "docker build -t ${imageName} ."
                         // Also tag as latest for convenience
-                        sh "docker tag elshahat20/myapp:github-activity-api:${version} elshahat20/myapp:github-activity-api:latest"
+                        sh "docker tag ${imageName} elshahat20/myapp:github-activity-api:latest"
                     }
                 }
             }
@@ -58,9 +60,11 @@ pipeline{
                     echo "Building Frontend Docker image with version: ${version}"
                     // Build the Frontend Docker image
                     dir('client') {
-                        buildImage "elshahat20/myapp:github-activity-client:${version}"
+                        def imageName = "elshahat20/myapp:github-activity-client:${version}"
+                        echo "Building image: ${imageName}"
+                        sh "docker build -t ${imageName} ."
                         // Also tag as latest for convenience
-                        sh "docker tag elshahat20/myapp:github-activity-client:${version} elshahat20/myapp:github-activity-client:latest"
+                        sh "docker tag ${imageName} elshahat20/myapp:github-activity-client:latest"
                     }
                 }
             }
@@ -80,12 +84,14 @@ pipeline{
                     echo "Pushing images to Docker Hub with version: ${version}"
                     
                     // Push API image
-                    dockerPush "elshahat20/myapp:github-activity-api:${version}"
+                    def apiImageName = "elshahat20/myapp:github-activity-api:${version}"
+                    sh "docker push ${apiImageName}"
+                    sh "docker push elshahat20/myapp:github-activity-api:latest"
                     
-
                     // Push Frontend image
-                    dockerPush "elshahat20/myapp:github-activity-client:${version}"
-                    
+                    def clientImageName = "elshahat20/myapp:github-activity-client:${version}"
+                    sh "docker push ${clientImageName}"
+                    sh "docker push elshahat20/myapp:github-activity-client:latest"
                 }
             }
         }
