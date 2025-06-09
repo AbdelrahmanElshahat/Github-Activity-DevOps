@@ -87,9 +87,18 @@ pipeline{
                     def version = getVersionFromPackageJson()
                     def shellcmd = "bash ./server_cmd.sh ${version}"
                     sshagent(['ec2-server']) {
-                        sh "scp server_cmd.sh ec2-user@13.48.127.224:/home/ec2-user"
-                        sh "scp docker-compose.yml ec2-user@13.48.127.224:/home/ec2-user"
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.48.127.224 '${shellcmd}"
+                        // Add EC2 host to known_hosts to avoid host verification issues
+                        sh "ssh-keyscan -H 13.48.127.224 >> ~/.ssh/known_hosts"
+                        
+                        // Copy deployment files
+                        sh "scp server_cmd.sh ec2-user@13.48.127.224:/home/ec2-user/"
+                        sh "scp docker-compose.yml ec2-user@13.48.127.224:/home/ec2-user/"
+                        
+                        // Execute deployment script
+                        sh "ssh ec2-user@13.48.127.224 '${shellcmd}'"
+                        
+                        // Verify deployment
+                        sh "ssh ec2-user@13.48.127.224 'docker ps'"
                     }
                 }
             }
