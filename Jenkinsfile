@@ -28,10 +28,15 @@ pipeline{
                 }
             }
         
-        stage("build"){
+        stage("build server and client"){
             steps{
                 script{
+                    dir('server'){
                     buildNodejs()
+                    }
+                    dir('client'){
+                        buildNodejs()
+                    }
                 }
             }
         }
