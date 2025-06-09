@@ -1,9 +1,7 @@
 version: '3.8'
 services:
   api:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
+    image: elshahat20/my-app:github-activity-api${version}
     container_name: github-activity-api
     ports:
       - "5000:5000"
@@ -20,9 +18,7 @@ services:
       timeout: 10s
       retries: 3
   client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
+    image: elshahat20/my-app:github-activity-client${version}
     container_name: github-activity-client
     ports:
       - "3000:80"

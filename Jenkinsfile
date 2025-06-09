@@ -81,9 +81,19 @@ pipeline{
                 }
             }
         }
-
-
-    }
+        stage("Deploy"){
+            steps{
+                script{
+                    def version = getVersionFromPackageJson()
+                    def shellcmd = "bash ./server_cmd.sh ${version}"
+                    sshagent(['ec2-server']) {
+                        sh "scp server_cmd.sh ec2-user@13.48.127.224:/home/ec2-user"
+                        sh "scp docker-compose.yml ec2-user@13.48.127.224:/home/ec2-user"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.48.127.224 '${shellcmd}"
+                    }
+                }
+            }
+        }
     post {
         always {
             cleanWs()
