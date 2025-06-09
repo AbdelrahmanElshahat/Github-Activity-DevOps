@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ COPY package*.json ./
 # Install only production dependencies
 RUN npm ci --only=production
 
-# Copy pre-built server files (assumes Jenkins already built them)
+# Copy pre-built server files 
 COPY . .
 
 # Expose API port

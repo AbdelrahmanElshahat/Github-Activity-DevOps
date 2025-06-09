@@ -6,7 +6,6 @@ library 'identifier' : 'jenkins-shared-library@master','retriever': modernSCM(
         credentials: 'gitlab-credentials'
     ]
 )
-def gv
 pipeline{
     agent any
     tools {
