@@ -7,20 +7,27 @@ services:
       - "5000:5000"
     environment:
       - PORT=5000
-      - NODE_ENV=development
-    volumes:
-      - ./server:/app
-      - /app/node_modules
+      - NODE_ENV=production
+    networks:
+      - github-activity-network
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:5000/api/health" ]
       interval: 30s
       timeout: 10s
       retries: 3
+
   client:
     image: elshahat20/my-app:github-activity-client${version}
     container_name: github-activity-client
     ports:
       - "3000:80"
+    networks:
+      - github-activity-network
     depends_on:
       - api
+    restart: unless-stopped
+
+networks:
+  github-activity-network:
+    driver: bridge
