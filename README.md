@@ -92,5 +92,3 @@ Common issues and solutions for the CI/CD pipeline:
 This project is licensed under the MIT License.
 
 ---
-
-Last Updated: June 16, 2025
